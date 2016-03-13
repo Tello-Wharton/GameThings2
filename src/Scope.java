@@ -82,10 +82,7 @@ public class Scope extends BasicEntity{
         return (55*55*b - 55*a*Math.sqrt(a*a + b*b - 55*55 ))/(a*a + b*b);
     }
 
-    public double[] vector(){
-        double[] vector = new double[2];
-        vector[0] = x2 - x1;
-        vector[1] = y2 - y1;
-        return vector;
+    public SimpleTrajectory getTrajectory(){
+        return new SimpleTrajectory(x1,x2,y1,y2);
     }
 }

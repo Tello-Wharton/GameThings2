@@ -29,7 +29,6 @@ public class Arm extends BasicEntity {
         }
         radians = Math.toRadians(bStart);
         bStart += 36;
-        grow = 1;
         radius = 60;
 
 
@@ -48,21 +47,23 @@ public class Arm extends BasicEntity {
 
     private double radians;
     public void draw(Graphics g){
+        if (!active)return;
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(body, at(), board);
     }
 
 
-    private int grow;
+
     private int radius;
-    private AffineTransform at(){
+    public AffineTransform at(){
         at = new AffineTransform();
         at.translate(player.centerX() - 5, player.centerY() - radius);
         at.rotate(radians, 5,radius);
-        //radius +=grow;
-        if(radius > 79)grow=-1;
-        if(radius < 40) grow= 1;
         return at;
+    }
+
+    double getRadians(){
+        return radians;
     }
 
 }

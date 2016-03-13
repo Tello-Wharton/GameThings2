@@ -16,10 +16,12 @@ public class Body extends BasicEntity {
 
     @Override
     public void update() {
+        if (!active)return;
     }
 
     @Override
     public void draw(Graphics g) {
+        if (!active)return;
         g.drawImage(body,player.xPos(),player.yPos(),board);
     }
 

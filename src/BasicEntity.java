@@ -14,6 +14,8 @@ public abstract class BasicEntity {
     protected int width;
     protected int height;
 
+    protected boolean active;
+
     public BasicEntity(String image){
         ImageIcon ii = new ImageIcon(image);
         body = ii.getImage();
@@ -21,12 +23,23 @@ public abstract class BasicEntity {
         width = ii.getIconWidth();
         height = ii.getIconHeight();
 
+        active = true;
     }
 
-    public BasicEntity(){}
+    public BasicEntity(){
+        active = true;
+    }
 
 
     public abstract void update();
     public abstract void draw(Graphics g);
+
+    public void setActive(boolean bool){
+        active = bool;
+    }
+
+    public boolean isActive(){
+        return active;
+    }
 
 }

@@ -45,11 +45,11 @@ public class Player {
 
 
     public int centerX(){
-        return (xPos + (width/2));
+        return (xPos + (width)/2);
     }
 
     public int centerY(){
-        return (yPos + (height/2));
+        return (yPos + (height+2)/2);
     }
 
     public int xPos(){
@@ -114,5 +114,41 @@ public class Player {
     public void stopRight() {
         right = false;
 
+    }
+
+    public Projectile removeArm(SimpleTrajectory trajectory) {
+        boolean hasArm = false;
+
+        double angle;
+        if (trajectory.x > 0) {
+            angle = Math.atan((trajectory.y) / trajectory.x);
+        }else{
+            if (trajectory.y > 0){
+                angle = Math.PI + Math.atan((trajectory.y) / trajectory.x);
+            }else{
+                angle = Math.atan((trajectory.y) / trajectory.x) - Math.PI;
+            }
+        }
+
+
+        Arm loaded = null;
+        double armDiff = Math.PI*2;
+        for (Arm arm : arms){
+            if (arm.isActive()){
+                hasArm = true;
+                double tempDiff = Math.min(Math.abs(angle - arm.getRadians()),Math.abs(angle - (arm.getRadians() + Math.PI*2)));
+                if (angle < arm.getRadians())tempDiff = Math.PI*2 - tempDiff;
+                if (tempDiff < armDiff){
+                    loaded = arm;
+                    armDiff = tempDiff;
+                }
+            }
+        }
+
+        if (hasArm){
+            loaded.setActive(false);
+            return new Projectile(loaded,trajectory);
+        }
+        return null;
     }
 }

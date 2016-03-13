@@ -1,6 +1,8 @@
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 
 /**
  * Created by Aaron on 12/03/2016.
@@ -12,12 +14,14 @@ public class Board extends JPanel implements ActionListener {
 
     private Player player;
     private Scope scope;
+    private HashSet<Projectile> projectiles;
 
 
 
     public Board() {
         addKeyListener(new TAdapter());
         addMouseMotionListener(new MAdapter());
+        addMouseListener(new CAdapter());
 
         setBackground(Color.black);
         setFocusable(true);
@@ -35,6 +39,7 @@ public class Board extends JPanel implements ActionListener {
     private void loadItems() {
         player = new Player();
         scope = new Scope(this,player);
+        projectiles = new HashSet<Projectile>();
     }
 
     public void initGame(){
@@ -52,6 +57,9 @@ public class Board extends JPanel implements ActionListener {
 
         player.draw(g);
         scope.draw(g);
+        for(Projectile p : projectiles){
+            p.draw(g);
+        }
 
         Toolkit.getDefaultToolkit().sync();
     }
@@ -61,6 +69,9 @@ public class Board extends JPanel implements ActionListener {
 
         player.update();
         scope.update();
+        for(Projectile p : projectiles){
+            p.update();
+        }
 
         repaint();
 
@@ -102,5 +113,34 @@ public class Board extends JPanel implements ActionListener {
 
         }
 
+    }
+
+    private class CAdapter implements MouseListener{
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+            Projectile p;
+            if((p = player.removeArm(scope.getTrajectory())) != null) projectiles.add(p);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
     }
 }
