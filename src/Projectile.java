@@ -45,7 +45,6 @@ public class Projectile extends BasicEntity{
 
             double tempDiff = Math.abs(angle - arm.getRadians());
             if (angle < arm.getRadians())tempDiff = Math.PI*2 - tempDiff;
-            //if (angle*arm.getRadians() < 0)
             if (tempDiff < armDiff){
                 armDiff = tempDiff;
             } else {

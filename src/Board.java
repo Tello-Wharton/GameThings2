@@ -15,6 +15,7 @@ public class Board extends JPanel implements ActionListener {
     private Player player;
     private Scope scope;
     private HashSet<Projectile> projectiles;
+    private Reload reload;
 
 
 
@@ -40,6 +41,7 @@ public class Board extends JPanel implements ActionListener {
         player = new Player();
         scope = new Scope(this,player);
         projectiles = new HashSet<Projectile>();
+        reload = new Reload();
     }
 
     public void initGame(){
@@ -54,25 +56,26 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void doDrawing(Graphics g) {
+        scope.draw(g);
 
         player.draw(g);
-        scope.draw(g);
         for(Projectile p : projectiles){
             p.draw(g);
         }
+        reload.draw(g);
 
         Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        scope.update();
 
         player.update();
-        scope.update();
         for(Projectile p : projectiles){
             p.update();
         }
-
+        reload.update();
         repaint();
 
 
@@ -142,5 +145,9 @@ public class Board extends JPanel implements ActionListener {
         public void mouseExited(MouseEvent e) {
 
         }
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

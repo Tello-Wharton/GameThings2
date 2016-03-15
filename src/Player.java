@@ -151,4 +151,13 @@ public class Player {
         }
         return null;
     }
+
+    public void reload(){
+        for(Arm arm : arms){
+            if (!arm.isActive()){
+                arm.setActive(true);
+                return;
+            }
+        }
+    }
 }
